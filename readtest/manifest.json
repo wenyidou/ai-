@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "益阅读",
+  "version": "1.1.1",
+  "description": "将网页内容设置最适合阅读，最舒服的方式",
+  "author": "wenyidu",
+  "background": {
+		"service_worker": "background.js"
+	},
+	"options_ui": { 
+		"page": "options.html",
+		"open_in_tab": true
+	},
+	"content_scripts": [
+		{
+		  "matches": ["<all_urls>"],
+		  "js": ["Readability.js","marked.min.js", "ability.js","content.js","site.js"],
+		  "css": ["reader.css"],
+		  "run_at": "document_idle",
+		  "all_frames": false
+		}
+		],
+	"web_accessible_resources": [ 
+		{
+			"matches": [
+				"*://www.baidu.com/*"
+			],
+			"resources": [
+				"test.css"
+			]
+		}
+	],
+	"host_permissions": [ 
+		"https://*/*"
+	],
+	"permissions": [
+		"storage",
+		"contextMenus",
+		"cookies",
+		"activeTab",
+		"scripting"
+	],
+	"action": { 
+		
+		"default_icon": {
+			"16": "icons/icon16.png",
+			"48": "icons/icon48.png",
+			"128": "icons/icon128.png"
+		},
+		"default_popup": "popup.html",
+    "icons": {
+		"16": "icons/icon16.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+    }
+	},
+	"commands": {
+		"toggle-reader": {
+		  "suggested_key": {
+			"default": "Ctrl+Shift+R",
+			"mac": "Command+Shift+R"
+		  },
+		  "description": "切换阅读模式"
+		}
+	  }
+	
+}

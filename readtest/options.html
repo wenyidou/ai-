@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高效阅读器 - 设置</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #4a90e2;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .range-value {
+            display: inline-block;
+            margin-left: 10px;
+            color: #4a90e2;
+            font-weight: 600;
+        }
+        
+        .color-picker-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .toggle-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 26px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #4a90e2;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        .preview {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .preview-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .preview-content {
+            padding: 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .preview-content p {
+            margin-bottom: 10px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background: #4a90e2;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #357abd;
+        }
+        
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .preset-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .preset-btn:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚙️ 高效阅读器设置</h1>
+        <p class="subtitle">自定义您的阅读体验</p>
+        
+        <!-- 字体设置 -->
+        <div class="section">
+            <h2 class="section-title">字体设置</h2>
+            
+            <div class="form-group">
+                <label>
+                    字体大小: <span class="range-value" id="fontSizeValue">18</span>px
+                </label>
+                <input type="range" id="fontSize" min="12" max="24" value="18" step="1">
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    行间距: <span class="range-value" id="lineHeightValue">1.8</span>
+                </label>
+                <input type="range" id="lineHeight" min="1.2" max="2.5" value="1.8" step="0.1">
+            </div>
+            
+            <div class="form-group">
+                <label>字体家族</label>
+                <select id="fontFamily">
+                    <option value='Georgia, "Times New Roman", serif'>Georgia (衬线)</option>
+                    <option value='"Helvetica Neue", Arial, sans-serif'>Helvetica (无衬线)</option>
+                    <option value='"Courier New", monospace'>Courier (等宽)</option>
+                    <option value='"Microsoft YaHei", "微软雅黑", sans-serif'>微软雅黑</option>
+                    <option value='"PingFang SC", "Hiragino Sans GB", sans-serif'>苹方/冬青黑体</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- 颜色设置 -->
+        <div class="section">
+            <h2 class="section-title">颜色设置</h2>
+            
+            <div class="form-group">
+                <label>暗黑模式</label>
+                <div class="toggle-group">
+                    <span>自动切换背景和文字颜色</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="darkMode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group" id="colorSettings">
+                <label>背景颜色</label>
+                <div class="color-picker-group">
+                    <input type="color" id="backgroundColor" value="#ffffff">
+                    <input type="text" id="backgroundColorText" value="#ffffff">
+                </div>
+            </div>
+            
+            <div class="form-group" id="textColorSettings">
+                <label>文字颜色</label>
+                <div class="color-picker-group">
+                    <input type="color" id="textColor" value="#333333">
+                    <input type="text" id="textColorText" value="#333333">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 布局设置 -->
+        <div class="section">
+            <h2 class="section-title">布局设置</h2>
+            
+            <div class="form-group">
+                <label>最大宽度</label>
+                <select id="maxWidth">
+                    <option value="600px">600px (窄)</option>
+                    <option value="900px" selected>900px (标准)</option>
+                    <option value="1000px">1000px (宽)</option>
+                    <option value="1200px">1200px (超宽)</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- 预设方案 -->
+        <div class="section">
+            <h2 class="section-title">预设方案</h2>
+            <div class="preset-buttons">
+                <button class="preset-btn" data-preset="default">默认</button>
+                <button class="preset-btn" data-preset="dark">暗黑</button>
+                <button class="preset-btn" data-preset="paper">纸张</button>
+                <button class="preset-btn" data-preset="night">夜间</button>
+            </div>
+        </div>
+        
+        <!-- 预览 -->
+        <div class="section">
+            <h2 class="section-title">实时预览</h2>
+            <div class="preview">
+                <div class="preview-title">预览效果</div>
+                <div class="preview-content" id="preview">
+                    <h3>这是一段示例文本</h3>
+                    <p>这是正文内容，用于预览您选择的字体、颜色和布局设置。您可以实时看到更改的效果。</p>
+                    <p>阅读体验的优化包括合适的字体大小、行间距和颜色对比度，这些都能让您更舒适地阅读长篇文章。</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div class="button-group">
+            <button class="btn-primary" id="saveBtn">保存设置</button>
+            <button class="btn-secondary" id="resetBtn">重置为默认</button>
+        </div>
+    </div>
+    
+    <script src="options.js"></script>
+</body>
+</html>
